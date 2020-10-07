@@ -1280,12 +1280,18 @@ section.buttons {
 
 
 /* Footer */
+#footer{
+    margin-bottom: 20px;
+}
+
+#footer .row {
+    margin-left: auto;
+    margin-right: auto;
+}
 
 #footer .copyright {
     text-align: center;
-    color: #fff;
     font-size: 14px;
-    margin-top: 50px;
 }
 
     #footer .copyright p {

@@ -39,41 +39,50 @@
                     @RenderBody()
                 </div>
             </div>
+
+            <!-- Footer -->
+            <footer id="footer">
+                <div class="row">
+                    <div class="col-md-3 text-center">
+                        @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "btn btn-outline-primary" })
+                    </div>
+                    <div class="copyright col-md-6">
+                        Copyright &copy; @DateTime.Now.Year
+                        <br>Designed by <a rel="nofollow" href="https://www.facebook.com/templatemo">Template Mo</a>
+                    </div>
+                </div>
+            </footer>
+
         </div>
 
         <!-- Sidebar -->
-        <div id="sidebar">
-            <div class="inner">
-                <!-- Menu -->
-                <nav id="menu">
-                    <ul>
-                        <li><a href="@Url.Action("Index", "Home")">Homepage</a></li>
-                        <li><a href="@Url.Action("Index", "RolesAdmin")">Simple Page</a></li>
-                        <li><a href="@Url.Action("Index", "UsersAdmin")">Shortcodes</a></li>
-                        <li>
-                            <span class="opener">Dropdown One</span>
-                            <ul>
-                                <li><a href="#">First Sub Menu</a></li>
-                                <li><a href="#">Second Sub Menu</a></li>
-                                <li><a href="#">Third Sub Menu</a></li>
-                            </ul>
-                        </li>
-                        <li>@Html.Partial("_LoginPartial")</li>
-                    </ul>
-                </nav>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div id="sidebar">
+                <div class="inner">
+                    <!-- Menu -->
+                    <nav id="menu">
+                        <ul>
+                            <li><a href="@Url.Action("Index", "Home")">Homepage</a></li>
+                            <li><a href="@Url.Action("Index", "RolesAdmin")">Simple Page</a></li>
+                            <li><a href="@Url.Action("Index", "UsersAdmin")">Shortcodes</a></li>
+                            <li>
+                                <span class="opener">Dropdown One</span>
+                                <ul>
+                                    <li><a href="#">First Sub Menu</a></li>
+                                    <li><a href="#">Second Sub Menu</a></li>
+                                    <li><a href="#">Third Sub Menu</a></li>
+                                </ul>
+                            </li>
+                            <li>@Html.Partial("_LoginPartial")</li>
+                        </ul>
+                    </nav>
 
-                <!-- Footer -->
-                <footer id="footer">
-                    <p class="copyright">
-                        Copyright &copy; @DateTime.Now.Year
-                        <br>Designed by <a rel="nofollow" href="https://www.facebook.com/templatemo">Template Mo</a>
-                    </p>
-                </footer>
-
+                </div>
             </div>
-        </div>
-
+        }
     </div>
+
     <!-- Scripts -->
     <!-- Bootstrap core JavaScript -->
     <script src="~/Content/vendor/jquery/jquery.min.js"></script>
