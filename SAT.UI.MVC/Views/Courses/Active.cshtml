@@ -8,9 +8,12 @@
 {
     <h2>@ViewBag.Title</h2>
 
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+    <div class="float-left">
+        @Html.ActionLink("Create New", "Create New", "Create", null, new { @class = "btn btn-outline-primary" })
+    </div>
+    <div class="float-right">
+        @Html.ActionLink("Retired Courses","Retired", "Courses", null, new { @class = "btn btn-outline-dark"})
+    </div>
     <table class="table">
         <tr>
             <th>

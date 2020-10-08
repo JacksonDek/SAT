@@ -8,9 +8,12 @@
 {
     <h2>@ViewBag.Title</h2>
 
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+    <div class="float-left">
+        @Html.ActionLink("Create New", "Create New", "Create", null, new { @class = "btn btn-outline-primary" })
+    </div>
+    <div class="float-right">
+        @Html.ActionLink("Active Courses", "Active", "Courses", null, new { @class = "btn btn-outline-dark" })
+    </div>
     <table class="table">
         <tr>
             <th>
@@ -58,8 +61,8 @@
                         @Html.DisplayFor(modelItem => item.IsActive)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.CouseId }) 
-                        @Html.ActionLink("Details", "Details", new { id = item.CouseId }) 
+                        @Html.ActionLink("Edit", "Edit", new { id = item.CouseId })
+                        @Html.ActionLink("Details", "Details", new { id = item.CouseId })
                         @Html.ActionLink("Delete", "Delete", new { id = item.CouseId })
                     </td>
                 </tr>
