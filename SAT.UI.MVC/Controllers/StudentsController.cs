@@ -122,7 +122,7 @@ namespace SAT.UI.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.SSID = new SelectList(db.StudentStatuses, "SSID", "SSName", student.SSID);
+            //ViewBag.SSID = new SelectList(db.StudentStatuses, "SSID", "SSName", student.SSID);
             return View(student);
         }
 
@@ -149,10 +149,68 @@ namespace SAT.UI.MVC.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "StudentID,FirstName,LastName,Major,Address,City,State,ZipCode,Phone,Email,PhotoUrl,SSID")] Student student)
+        public ActionResult Edit([Bind(Include = "StudentID,FirstName,LastName,Major,Address,City,State,ZipCode,Phone,Email,PhotoUrl,SSID")] Student student, HttpPostedFileBase studentPic)
         {
             if (ModelState.IsValid)
             {
+                //Use a default image if one is not provided with the object - noImage.png
+                string imgName = "noImage.png";
+
+                //check the HPFB to ensure it is NOT NUll
+                if (studentPic != null)
+                {
+                    //if not null do the following
+                    //retrieve the image from the HPFB and assign to the variable
+                    imgName = studentPic.FileName;
+
+                    //declare and assign the extension.
+                    string ext = imgName.Substring(imgName.LastIndexOf('.'));
+
+                    //declare list of VALID extensions (image types)
+                    string[] goodExts = { ".jpeg", ".jpg", ".gif", ".png" };
+
+                    //check the ext variable using the ToLower() against the valid list && make sure the content length is not too large.
+                    if (goodExts.Contains(ext.ToLower()) && (studentPic.ContentLength <= 41964304))
+                    //Content Length is 4mb max allowed by ASP.NET (expressed in bytes)
+                    {
+
+                        //if both values are good rename using a GUID (there are other ways to rename the file) + ext to the new name
+                        //GUID - Global Unique IDentifier
+                        imgName = Guid.NewGuid() + ext.ToLower();
+                        #region Save UnResized value to the webserver
+                        //save the value to the webserver
+                        studentPic.SaveAs(Server.MapPath("~/Content/assets/images/studentImages/" + imgName));
+                        #endregion
+
+                        if (student.PhotoUrl != null && student.PhotoUrl != "noImage.png")
+                        {
+                            System.IO.File.Delete(Server.MapPath("~/Content/images/studentImages/" + Session["currentImage"].ToString()));
+
+                        }
+
+                        #region Resize Image **inactive Code**
+                        //provide the requirements to call the ResizeImage() - SavePath, Image, maxImageSize, MaxThumb Size
+                        //string savePath = Server.MapPath("~/Content/imgstore/books/");
+                        //Image convertedImage = Image.FromStream(studentPic.InputStream);
+                        //int maxImageSize = 500;
+                        //int maxThumbSize = 100;
+
+                        ////Call the ImageService.ResizeImage()
+                        //ImageService.ResizeImage(savePath, imgName, convertedImage, maxImageSize, maxThumbSize);
+
+                        #endregion
+                        //No Matter What - add the imageName to the Property of the Book object to send to the database.
+                        student.PhotoUrl = imgName;
+                    }
+                    //if EITHER of the values are NOT valid - go back to the noImage.png
+                    else
+                    {
+                        imgName = "~/Content/assets/images/studentImages/" + imgName;
+                    }
+
+                }
+
+
                 db.Entry(student).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -184,7 +242,38 @@ namespace SAT.UI.MVC.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Student student = db.Students.Find(id);
-            db.Students.Remove(student);
+
+            //if (student.PhotoUrl != null && student.PhotoUrl != "noImage.png")
+            //{
+            //    System.IO.File.Delete(Server.MapPath("~/Content/assets/images/studentImages/" + Session["currentImage"].ToString()));
+            //}
+
+            //db.Students.Remove(student);
+
+            //if (student.SSID == 3)
+            //{
+            //    student.SSID = 2;
+            //}
+            //else 
+            //{
+            //    student.SSID = 3; 
+            //}
+
+            if (student.SSID == 3)
+            {
+                student.SSID = 2;
+            }
+            else if (student.SSID == 2)
+            {
+                student.SSID = 3;
+            }
+            else
+            {
+                return RedirectToAction("Edit", new { id });
+            }
+
+
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }

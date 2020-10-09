@@ -142,9 +142,16 @@ namespace SAT.UI.MVC.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Course course = db.Courses1.Find(id);
-            db.Courses1.Remove(course);
+            course.IsActive = !course.IsActive;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            if (course.IsActive == true)
+            {
+                return RedirectToAction("Active");
+            }
+            else
+            {
+                return RedirectToAction("Retired");
+            }
         }
 
         protected override void Dispose(bool disposing)

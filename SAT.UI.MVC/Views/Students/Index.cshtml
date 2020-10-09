@@ -15,6 +15,8 @@
 <table class="table">
     <tr>
         <th>
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.FirstName)
         </th>
         <th>
@@ -23,7 +25,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Major)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Address)
         </th>
         <th>
@@ -37,16 +39,14 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Phone)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PhotoUrl)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.StudentStatus.SSName)
         </th>
+        <th></th>
         <th></th>
 
     </tr>
@@ -54,6 +54,10 @@
     @foreach (var item in Model)
     {
         <tr>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.PhotoUrl)*@
+                <img src="~/Content/assets/images/studentImages/@item.PhotoUrl" alt="student picture for @item.FullName" title="@item.FullName" />
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
@@ -63,7 +67,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Major)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td>
@@ -77,14 +81,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Phone)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @*@Html.DisplayFor(modelItem => item.PhotoUrl)*@
-                <img src="~/Content/assets/images/studentImages/@item.PhotoUrl" alt="student picture for @item.FullName" title="@item.FullName" />
-
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StudentStatus.SSName)
@@ -92,11 +91,20 @@
             @if (User.IsInRole("Admin"))
             {
                 <td>
+                    @if (item.Enrollments.Count() == 0)
+                    {
+                        @Html.ActionLink("Delete", "Delete", new { id = item.StudentID })
+                    }
+                    else
+                    {
+                        <span style="color: red">Currently Enrolled</span>
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.StudentID })
                     @Html.ActionLink("Edit", "Edit", new { id = item.StudentID })
-                    @Html.ActionLink("Delete", "Delete", new { id = item.StudentID })
                 </td>
             }
-            <td>@Html.ActionLink("Details", "Details", new { id = item.StudentID })</td>
         </tr>
     }
 
