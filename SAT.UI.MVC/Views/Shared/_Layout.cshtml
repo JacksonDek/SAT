@@ -15,6 +15,10 @@
     Ramayana CSS Template
     https://templatemo.com/tm-529-ramayana
     -->
+<!--jQueryUI reference-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+
+
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="~/Content/assets/css/fontawesome.css">
     <link rel="stylesheet" href="~/Content/assets/css/templatemo-style.css">
@@ -64,16 +68,44 @@
                     <nav id="menu">
                         <ul>
                             <li><a href="@Url.Action("Index", "Home")">Homepage</a></li>
-                            <li><a href="@Url.Action("Index", "RolesAdmin")">Simple Page</a></li>
-                            <li><a href="@Url.Action("Index", "UsersAdmin")">Shortcodes</a></li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                @* Courses *@
+                                <li>
+                                    <span class="opener">Courses</span>
+                                    <ul>
+                                        <li><a href=@Url.Action("Active", "Courses")>Active</a></li>
+                                        <li><a href=@Url.Action("Retired", "Courses")>Retired</a></li>
+                                    </ul>
+                                </li>
+                                @* Students Statuses *@
+                                <li>
+                                    <a href="@Url.Action("Index", "StudentStatus")">Student Status</a>
+                                </li>
+                            }
+                            @* Enrollment *@
                             <li>
-                                <span class="opener">Dropdown One</span>
-                                <ul>
-                                    <li><a href="#">First Sub Menu</a></li>
-                                    <li><a href="#">Second Sub Menu</a></li>
-                                    <li><a href="#">Third Sub Menu</a></li>
-                                </ul>
+                                <a href="@Url.Action("Index", "Enrollments")">Enrollment</a>
                             </li>
+                            @* Scheduled Classes *@
+                            <li>
+                                <a href="@Url.Action("Index", "ScheduledClasses")">Scheduled Classes</a>
+                            </li>
+                            @* Students *@
+                            <li>
+                                <a href="@Url.Action("Index", "Students")">Students</a>
+                            </li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                @* Admin *@
+                                <li>
+                                    <span class="opener">Admin</span>
+                                    <ul>
+                                        <li><a href="@Url.Action("Index", "RolesAdmin")">Roles Admin</a></li>
+                                        <li><a href="@Url.Action("Index", "UsersAdmin")">Users Admin</a></li>
+                                    </ul>
+                                </li>
+                            }
                             <li>@Html.Partial("_LoginPartial")</li>
                         </ul>
                     </nav>
@@ -92,6 +124,9 @@
     <script src="~/Content/assets/js/transition.js"></script>
     <script src="~/Content/assets/js/owl-carousel.js"></script>
     <script src="~/Content/assets/js/custom.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 
     @RenderSection("scripts", required: false)
 

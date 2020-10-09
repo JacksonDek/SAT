@@ -7,6 +7,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SAT.DATA.EF//.Metadata
 {
+    #region Course Metadata
+
     public class CourseMetaData
     {
         //public int CouseId { get; set; }
@@ -39,6 +41,10 @@ namespace SAT.DATA.EF//.Metadata
     [MetadataType(typeof(CourseMetaData))]
     public partial class Course { }
 
+    #endregion
+
+    #region Enrollment Metadata
+
     public class EnrollmentMetaData
     {
         [Required(ErrorMessage = "* Required")]
@@ -52,10 +58,15 @@ namespace SAT.DATA.EF//.Metadata
 
         [Display(Name = "Date Enrolled")]
         [Required(ErrorMessage = "* Required")]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true, NullDisplayText = "NA")]
         public System.DateTime EnrollmentDate { get; set; }
     }
     [MetadataType(typeof(EnrollmentMetaData))]
     public partial class Enrollment { }
+
+    #endregion
+
+    #region ScheduledClass Metadata
 
     public class ScheduledClassMetaData
     {
@@ -66,10 +77,12 @@ namespace SAT.DATA.EF//.Metadata
 
         [Required(ErrorMessage = "* Required")]
         [Display(Name = "Start Date")]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true, NullDisplayText = "NA")]
         public System.DateTime StartDate { get; set; }
 
         [Required(ErrorMessage = "* Required")]
         [Display(Name = "End Date")]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true, NullDisplayText = "NA")]
         public System.DateTime EndDate { get; set; }
 
         [Required(ErrorMessage = "* Required")]
@@ -86,18 +99,32 @@ namespace SAT.DATA.EF//.Metadata
         public int SCSID { get; set; }
     }
     [MetadataType(typeof(ScheduledClassMetaData))]
-    public partial class ScheduledClass { }
+    public partial class ScheduledClass
+    {
+        [Display(Name = "Class Summary")]
+        public string ClassSummary
+        {
+            get { return StartDate + " | " + Cours.CourseName + " | " + Location; }
+        }
+    }
 
-    public partial class ScheduledClassStatusMetaData
+    #endregion
+
+    #region ScheduledClassStatus Metadata
+
+    public class ScheduledClassStatusMetaData
     {
         //public int SCSID { get; set; }
         [Required(ErrorMessage = "* Required")]
         [StringLength(50, ErrorMessage = "* Must be 50 characters or less.")]
-        [Display(Name = "Course Name")]
+        [Display(Name = "Course Status")]
         public string SCSName { get; set; }
     }
     [MetadataType(typeof(ScheduledClassStatusMetaData))]
     public partial class ScheduledClassStatus { }
+    #endregion
+
+    #region Student Metadata
 
     public class StudentMetaData
     {
@@ -136,6 +163,7 @@ namespace SAT.DATA.EF//.Metadata
 
         [Display(Name = "Phone Number")]
         [StringLength(13, ErrorMessage = "* Must be 13 characters or less.")]
+        [DisplayFormat(DataFormatString = "{0:p}", ApplyFormatInEditMode = true)]
         [Phone]
         public string Phone { get; set; }
 
@@ -149,7 +177,17 @@ namespace SAT.DATA.EF//.Metadata
         public int SSID { get; set; }
     }
     [MetadataType(typeof(StudentMetaData))]
-    public partial class Student { }
+    public partial class Student
+    {
+        [Display(Name = "Student Name")]
+        public string FullName
+        {
+            get { return FirstName + " " + LastName;  }
+        }
+    }
+    #endregion
+
+    #region StudentStatus Metadata
 
     public class StudentStatusMetaData
     {
@@ -165,5 +203,6 @@ namespace SAT.DATA.EF//.Metadata
     }
     [MetadataType(typeof(StudentStatusMetaData))]
     public partial class StudentStatus { }
+    #endregion
 
 }

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<SAT.DATA.EF.StudentStatus>
+
+@{
+    ViewBag.Title = "Student Status";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (User.IsInRole("Admin"))
+{
+    <div class="row">
+        <p class="col-md-6">
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-outline-primary" })
+        </p>
+        <p class="col-md-6 text-right">
+            @Html.ActionLink("Tile Student Status", "TileIndex", null, new { @class = "btn btn-outline-dark" })
+        </p>
+    </div>
+}
+else
+{
+    <p class="col-md-12 text-right">
+        @Html.ActionLink("Tile Student Status", "StudentStatus", null, new { @class = "btn btn-outline-dark" })
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SSName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SSDescription)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SSName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SSDescription)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.SSID })
+                @Html.ActionLink("Delete", "Delete", new { id = item.SSID })
+                @Html.ActionLink("Details", "Details", new { id = item.SSID })
+            </td>
+        </tr>
+    }
+
+</table>

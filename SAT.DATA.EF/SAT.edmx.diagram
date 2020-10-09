@@ -16,6 +16,14 @@
         <AssociationConnector Association="SATModel.FK_Enrollments_Students" ManuallyRouted="false" />
         <AssociationConnector Association="SATModel.FK_ScheduledClasses_ScheduledClassStatuses" ManuallyRouted="false" />
         <AssociationConnector Association="SATModel.FK_Students_StudentStatuses" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SATModel.C__MigrationHistory" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="SATModel.AspNetRole" Width="1.5" PointX="5.375" PointY="6.5" />
+        <EntityTypeShape EntityType="SATModel.AspNetUserClaim" Width="1.5" PointX="9.875" PointY="5" />
+        <EntityTypeShape EntityType="SATModel.AspNetUserLogin" Width="1.5" PointX="9.875" PointY="7.75" />
+        <EntityTypeShape EntityType="SATModel.AspNetUser" Width="1.5" PointX="7.625" PointY="5.375" />
+        <AssociationConnector Association="SATModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="SATModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="SATModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

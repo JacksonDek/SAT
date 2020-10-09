@@ -10,51 +10,60 @@
     <section class="services">
         <div class="container-fluid">
             <div class="row">
+                @if (User.IsInRole("Admin"))
+                {
+                    <div class="col-md-4">
+                        <a href="@Url.Action("Active", "Courses")">
+                            <div class="service-item first-item">
+                                <div class="icon"></div>
+                                <h4>Active Courses</h4>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="@Url.Action("Retired", "Courses")">
+                            <div class="service-item second-item">
+                                <div class="icon"></div>
+                                <h4>Retired Courses</h4>
+                            </div>
+                        </a>
+                    </div>
+                }
                 <div class="col-md-4">
-                    <a href="@Url.Action("Active", "Courses")">
-                        <div class="service-item first-item">
+                    <a href="@Url.Action("Index", "Enrollments")">
+                        <div class="service-item third-item">
                             <div class="icon"></div>
-                            <h4>Active Courses</h4>
+                            <h4>Enrollment</h4>
                         </div>
                     </a>
-
                 </div>
                 <div class="col-md-4">
-                    <a href="@Url.Action("Retired", "Courses")">
-                        <div class="service-item second-item">
+                    <a href="@Url.Action("Index", "ScheduledClasses")">
+                        <div class="service-item fourth-item">
                             <div class="icon"></div>
-                            <h4>Retired Courses</h4>
+                            <h4>Scheduled Classes</h4>
                         </div>
                     </a>
                 </div>
                 <div class="col-md-4">
-                    <div class="service-item third-item">
-                        <div class="icon"></div>
-                        <h4>HTML CSS</h4>
-                        <p>Proin aliquam facilisis ante interdum. Sed nulla feugiat tempus aliquam.</p>
-                    </div>
+                    <a href="@Url.Action("Index", "Students")">
+                        <div class="service-item fivth-item">
+                            <div class="icon"></div>
+                            <h4>Students</h4>
+                        </div>
+                    </a>
                 </div>
-                <div class="col-md-4">
-                    <div class="service-item fourth-item">
-                        <div class="icon"></div>
-                        <h4>Download Free</h4>
-                        <p>We have many free to use CSS web templates on our site for you.</p>
+                @if (User.IsInRole("Admin"))
+                {
+                    <div class="col-md-4">
+                        <a href="@Url.Action("Index", "StudentStatus")">
+                            <div class="service-item sixth-item">
+                                <div class="icon"></div>
+                                <h4>Student Status</h4>
+                            </div>
+                        </a>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="service-item fivth-item">
-                        <div class="icon"></div>
-                        <h4>Get in touch</h4>
-                        <p>You can get the fastest response from <a rel="nofollow" href="https://www.facebook.com/templatemo">templatemo</a> facebook page.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="service-item sixth-item">
-                        <div class="icon"></div>
-                        <h4>Spread a word</h4>
-                        <p>Please tell your friends about our website. This is very helpful.</p>
-                    </div>
-                </div>
+                }
             </div>
         </div>
     </section>

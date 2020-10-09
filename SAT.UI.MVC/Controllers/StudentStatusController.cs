@@ -7,142 +7,117 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SAT.DATA.EF;
-using System.ComponentModel.DataAnnotations;
 
 namespace SAT.UI.MVC.Controllers
 {
-
-    public class CoursesController : Controller
+    [Authorize(Roles = "Admin")]
+    public class StudentStatusController : Controller
     {
         private SATEntities db = new SATEntities();
 
-        // GET: Courses
-        [Authorize(Roles = "Admin")]
-        public ActionResult Active()
+        //TILE VIEW
+        public ActionResult TileIndex()
         {
-
-            return View(db.Courses1.ToList());
-
+            return View(db.StudentStatuses.ToList());
         }
 
-        [Authorize(Roles = "Admin")]
-        public ActionResult Retired()
+        // GET: StudentStatus
+        public ActionResult Index()
         {
-            return View(db.Courses1.ToList());
+            return View(db.StudentStatuses.ToList());
         }
 
-        // GET: Courses/Details/5
-        [Authorize(Roles = "Admin")]
+        // GET: StudentStatus/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Course course = db.Courses1.Find(id);
-            if (course == null)
+            StudentStatus studentStatus = db.StudentStatuses.Find(id);
+            if (studentStatus == null)
             {
                 return HttpNotFound();
             }
-            return View(course);
+            return View(studentStatus);
         }
 
-        // GET: Courses/Create
-        [Authorize(Roles = "Admin")]
+        // GET: StudentStatus/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Courses/Create
+        // POST: StudentStatus/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CouseId,CourseName,CourseDescription,CreditHours,Curriculum,Notes,IsActive")] Course course)
+        public ActionResult Create([Bind(Include = "SSID,SSName,SSDescription")] StudentStatus studentStatus)
         {
             if (ModelState.IsValid)
             {
-                db.Courses1.Add(course);
+                db.StudentStatuses.Add(studentStatus);
                 db.SaveChanges();
-                if (course.IsActive == true)
-                {
-                    return RedirectToAction("Active");
-                }
-                else
-                {
-                    return RedirectToAction("Retired");
-                }
+                return RedirectToAction("Index");
             }
 
-            return View(course);
+            return View(studentStatus);
         }
 
-        // GET: Courses/Edit/5
-        [Authorize(Roles = "Admin")]
+        // GET: StudentStatus/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Course course = db.Courses1.Find(id);
-            if (course == null)
+            StudentStatus studentStatus = db.StudentStatuses.Find(id);
+            if (studentStatus == null)
             {
                 return HttpNotFound();
             }
-            return View(course);
+            return View(studentStatus);
         }
 
-        // POST: Courses/Edit/5
+        // POST: StudentStatus/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CouseId,CourseName,CourseDescription,CreditHours,Curriculum,Notes,IsActive")] Course course)
+        public ActionResult Edit([Bind(Include = "SSID,SSName,SSDescription")] StudentStatus studentStatus)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(course).State = EntityState.Modified;
+                db.Entry(studentStatus).State = EntityState.Modified;
                 db.SaveChanges();
-                if (course.IsActive == true)
-                {
-                    return RedirectToAction("Active");
-                }
-                else
-                {
-                    return RedirectToAction("Retired");
-                }
+                return RedirectToAction("Index");
             }
-            return View(course);
+            return View(studentStatus);
         }
 
-        // GET: Courses/Delete/5
-        [Authorize(Roles = "Admin")]
+        // GET: StudentStatus/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Course course = db.Courses1.Find(id);
-            if (course == null)
+            StudentStatus studentStatus = db.StudentStatuses.Find(id);
+            if (studentStatus == null)
             {
                 return HttpNotFound();
             }
-            return View(course);
+            return View(studentStatus);
         }
 
-        // POST: Courses/Delete/5
-        [Authorize(Roles = "Admin")]
+        // POST: StudentStatus/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Course course = db.Courses1.Find(id);
-            db.Courses1.Remove(course);
+            StudentStatus studentStatus = db.StudentStatuses.Find(id);
+            db.StudentStatuses.Remove(studentStatus);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
