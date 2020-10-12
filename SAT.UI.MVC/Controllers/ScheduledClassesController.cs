@@ -10,7 +10,7 @@ using SAT.DATA.EF;
 
 namespace SAT.UI.MVC.Controllers
 {
-    
+
     public class ScheduledClassesController : Controller
     {
         private SATEntities db = new SATEntities();
@@ -129,7 +129,19 @@ namespace SAT.UI.MVC.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             ScheduledClass scheduledClass = db.ScheduledClasses.Find(id);
-            db.ScheduledClasses.Remove(scheduledClass);
+            #region Soft Delete Control
+
+            if (scheduledClass.SCSID == 4)
+            {
+                scheduledClass.SCSID = 1;
+            }
+            else
+            {
+                scheduledClass.SCSID = 4;
+            }
+            #endregion
+
+            //db.ScheduledClasses.Remove(scheduledClass);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

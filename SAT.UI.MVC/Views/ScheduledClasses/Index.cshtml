@@ -52,16 +52,30 @@
                 @Html.DisplayFor(modelItem => item.Cours.CourseName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ScheduledClassStatus.SCSName)
+                @*@Html.DisplayFor(modelItem => item.ScheduledClassStatus.SCSName)*@
+
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.DisplayFor(modelItem => item.ScheduledClassStatus.SCSName)
+                    if (item.SCSID == 4)
+                    {
+                        @Html.ActionLink("Reactivate", "Delete", "ScheduledClasses", new { id = item.ScheduledClassId }, new { @class = "btn btn-outline-success" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Cancel Class", "Delete", "ScheduledClasses", new { id = item.ScheduledClassId }, new { @class = "btn btn-outline-warning" })
+                    }
+                }
+
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.ScheduledClassId }) <br />
                 @Html.ActionLink("Details", "Details", new { id = item.ScheduledClassId }) <br />
 
-                @if (User.IsInRole("Admin"))
+                @*@if (User.IsInRole("Admin"))
                 {
                     @Html.ActionLink("Delete", "Delete", new { id = item.ScheduledClassId })
-                }
+                }*@
             </td>
         </tr>
     }

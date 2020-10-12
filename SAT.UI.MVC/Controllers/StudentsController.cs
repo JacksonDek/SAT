@@ -57,65 +57,65 @@ namespace SAT.UI.MVC.Controllers
             if (ModelState.IsValid)
             {
 
-                //Only process the image if ALL other Model information is valid
-                #region File Upload - Game Cover
-                //Use a default image if one is not provided with the book object - noImage.png
-                string imgName = "noImage.png";
+                ////Only process the image if ALL other Model information is valid
+                //#region File Upload - Game Cover
+                ////Use a default image if one is not provided with the book object - noImage.png
+                //string imgName = "noImage.png";
 
-                //check the HPFB to ensure it is NOT NUll
-                if (studentPic != null)
-                {
-                    //if not null do the following
-                    //retrieve the image from the HPFB and assign to the variable
-                    imgName = studentPic.FileName;
+                ////check the HPFB to ensure it is NOT NUll
+                //if (studentPic != null)
+                //{
+                //    //if not null do the following
+                //    //retrieve the image from the HPFB and assign to the variable
+                //    imgName = studentPic.FileName;
 
-                    //declare and assign the extension.
-                    string ext = imgName.Substring(imgName.LastIndexOf('.'));
+                //    //declare and assign the extension.
+                //    string ext = imgName.Substring(imgName.LastIndexOf('.'));
 
-                    //declare list of VALID extensions (image types)
-                    string[] goodExts = { ".jpeg", ".jpg", ".gif", ".png" };
+                //    //declare list of VALID extensions (image types)
+                //    string[] goodExts = { ".jpeg", ".jpg", ".gif", ".png" };
 
-                    //check the ext variable using the ToLower() against the valid list && make sure the content length is not too large.
-                    if (goodExts.Contains(ext.ToLower()) && (studentPic.ContentLength <= 41964304))
-                    //Content Length is 4mb max allowed by ASP.NET (expressed in bytes)
-                    {
+                //    //check the ext variable using the ToLower() against the valid list && make sure the content length is not too large.
+                //    if (goodExts.Contains(ext.ToLower()) && (studentPic.ContentLength <= 41964304))
+                //    //Content Length is 4mb max allowed by ASP.NET (expressed in bytes)
+                //    {
 
-                        //if both values are good rename using a GUID (there are other ways to rename the file) + ext to the new name
-                        //GUID - Global Unique IDentifier
-                        imgName = Guid.NewGuid() + ext.ToLower();//ToLower() is optional, just makes files look cleaner in a list
-                                                                 //could rename the file with unique information, you just need to ensure that the stringLength will accommodate                        it.
-                                                                 //imgName = book.BookTitle + "_" + DateTime.Now + "_" + User.Identity.Name;
-                                                                 //string length for image in metadata should accommodate StringLength for Booktitle + MAX dateTime Characters +                        128
-                                                                 //characters for the username. - Would fail if an ANONYMOUS (unauthenticated user added a book record with                             image)
+                //        //if both values are good rename using a GUID (there are other ways to rename the file) + ext to the new name
+                //        //GUID - Global Unique IDentifier
+                //        imgName = Guid.NewGuid() + ext.ToLower();//ToLower() is optional, just makes files look cleaner in a list
+                //                                                 //could rename the file with unique information, you just need to ensure that the stringLength will accommodate                        it.
+                //                                                 //imgName = book.BookTitle + "_" + DateTime.Now + "_" + User.Identity.Name;
+                //                                                 //string length for image in metadata should accommodate StringLength for Booktitle + MAX dateTime Characters +                        128
+                //                                                 //characters for the username. - Would fail if an ANONYMOUS (unauthenticated user added a book record with                             image)
 
-                        #region Save UnResized value to the webserver
-                        //save the value to the webserver
-                        studentPic.SaveAs(Server.MapPath("~/Content/assets/images/studentImages/" + imgName));
-                        #endregion
+                //        #region Save UnResized value to the webserver
+                //        //save the value to the webserver
+                //        studentPic.SaveAs(Server.MapPath("~/Content/assets/images/studentImages/" + imgName));
+                //        #endregion
 
-                        #region Resize Image **inactive Code**
-                        //provide the requirements to call the ResizeImage() - SavePath, Image, maxImageSize, MaxThumb Size
-                        //string savePath = Server.MapPath("~/Content/imgstore/books/");
-                        //Image convertedImage = Image.FromStream(studentPic.InputStream);
-                        //int maxImageSize = 500;
-                        //int maxThumbSize = 100;
+                //        #region Resize Image **inactive Code**
+                //        //provide the requirements to call the ResizeImage() - SavePath, Image, maxImageSize, MaxThumb Size
+                //        //string savePath = Server.MapPath("~/Content/imgstore/books/");
+                //        //Image convertedImage = Image.FromStream(studentPic.InputStream);
+                //        //int maxImageSize = 500;
+                //        //int maxThumbSize = 100;
 
-                        ////Call the ImageService.ResizeImage()
-                        //ImageService.ResizeImage(savePath, imgName, convertedImage, maxImageSize, maxThumbSize);
+                //        ////Call the ImageService.ResizeImage()
+                //        //ImageService.ResizeImage(savePath, imgName, convertedImage, maxImageSize, maxThumbSize);
 
-                        #endregion
-                        //No Matter What - add the imageName to the Property of the Book object to send to the database.
-                        student.PhotoUrl = imgName;
-                    }
-                    //if EITHER of the values are NOT valid - go back to the noImage.png
-                    else
-                    {
-                        imgName = "noImage.png";
-                    }
+                //        #endregion
+                //        //No Matter What - add the imageName to the Property of the Book object to send to the database.
+                //        student.PhotoUrl = imgName;
+                //    }
+                //    //if EITHER of the values are NOT valid - go back to the noImage.png
+                //    else
+                //    {
+                //        imgName = "noImage.png";
+                //    }
 
-                }
+                //}
 
-                #endregion
+                //#endregion
 
                 db.Students.Add(student);
                 db.SaveChanges();
@@ -153,62 +153,62 @@ namespace SAT.UI.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Use a default image if one is not provided with the object - noImage.png
-                string imgName = "noImage.png";
+                ////Use a default image if one is not provided with the object - noImage.png
+                //string imgName = "noImage.png";
 
-                //check the HPFB to ensure it is NOT NUll
-                if (studentPic != null)
-                {
-                    //if not null do the following
-                    //retrieve the image from the HPFB and assign to the variable
-                    imgName = studentPic.FileName;
+                ////check the HPFB to ensure it is NOT NUll
+                //if (studentPic != null)
+                //{
+                //    //if not null do the following
+                //    //retrieve the image from the HPFB and assign to the variable
+                //    imgName = studentPic.FileName;
 
-                    //declare and assign the extension.
-                    string ext = imgName.Substring(imgName.LastIndexOf('.'));
+                //    //declare and assign the extension.
+                //    string ext = imgName.Substring(imgName.LastIndexOf('.'));
 
-                    //declare list of VALID extensions (image types)
-                    string[] goodExts = { ".jpeg", ".jpg", ".gif", ".png" };
+                //    //declare list of VALID extensions (image types)
+                //    string[] goodExts = { ".jpeg", ".jpg", ".gif", ".png" };
 
-                    //check the ext variable using the ToLower() against the valid list && make sure the content length is not too large.
-                    if (goodExts.Contains(ext.ToLower()) && (studentPic.ContentLength <= 41964304))
-                    //Content Length is 4mb max allowed by ASP.NET (expressed in bytes)
-                    {
+                //    //check the ext variable using the ToLower() against the valid list && make sure the content length is not too large.
+                //    if (goodExts.Contains(ext.ToLower()) && (studentPic.ContentLength <= 41964304))
+                //    //Content Length is 4mb max allowed by ASP.NET (expressed in bytes)
+                //    {
 
-                        //if both values are good rename using a GUID (there are other ways to rename the file) + ext to the new name
-                        //GUID - Global Unique IDentifier
-                        imgName = Guid.NewGuid() + ext.ToLower();
-                        #region Save UnResized value to the webserver
-                        //save the value to the webserver
-                        studentPic.SaveAs(Server.MapPath("~/Content/assets/images/studentImages/" + imgName));
-                        #endregion
+                //        //if both values are good rename using a GUID (there are other ways to rename the file) + ext to the new name
+                //        //GUID - Global Unique IDentifier
+                //        imgName = Guid.NewGuid() + ext.ToLower();
+                //        #region Save UnResized value to the webserver
+                //        //save the value to the webserver
+                //        studentPic.SaveAs(Server.MapPath("~/Content/assets/images/studentImages/" + imgName));
+                //        #endregion
 
-                        if (student.PhotoUrl != null && student.PhotoUrl != "noImage.png")
-                        {
-                            System.IO.File.Delete(Server.MapPath("~/Content/images/studentImages/" + Session["currentImage"].ToString()));
+                //        if (student.PhotoUrl != null && student.PhotoUrl != "noImage.png")
+                //        {
+                //            System.IO.File.Delete(Server.MapPath("~/Content/images/studentImages/" + Session["currentImage"].ToString()));
 
-                        }
+                //        }
 
-                        #region Resize Image **inactive Code**
-                        //provide the requirements to call the ResizeImage() - SavePath, Image, maxImageSize, MaxThumb Size
-                        //string savePath = Server.MapPath("~/Content/imgstore/books/");
-                        //Image convertedImage = Image.FromStream(studentPic.InputStream);
-                        //int maxImageSize = 500;
-                        //int maxThumbSize = 100;
+                //        #region Resize Image **inactive Code**
+                //        //provide the requirements to call the ResizeImage() - SavePath, Image, maxImageSize, MaxThumb Size
+                //        //string savePath = Server.MapPath("~/Content/imgstore/books/");
+                //        //Image convertedImage = Image.FromStream(studentPic.InputStream);
+                //        //int maxImageSize = 500;
+                //        //int maxThumbSize = 100;
 
-                        ////Call the ImageService.ResizeImage()
-                        //ImageService.ResizeImage(savePath, imgName, convertedImage, maxImageSize, maxThumbSize);
+                //        ////Call the ImageService.ResizeImage()
+                //        //ImageService.ResizeImage(savePath, imgName, convertedImage, maxImageSize, maxThumbSize);
 
-                        #endregion
-                        //No Matter What - add the imageName to the Property of the Book object to send to the database.
-                        student.PhotoUrl = imgName;
-                    }
-                    //if EITHER of the values are NOT valid - go back to the noImage.png
-                    else
-                    {
-                        imgName = "~/Content/assets/images/studentImages/" + imgName;
-                    }
+                //        #endregion
+                //        //No Matter What - add the imageName to the Property of the Book object to send to the database.
+                //        student.PhotoUrl = imgName;
+                //    }
+                //    //if EITHER of the values are NOT valid - go back to the noImage.png
+                //    else
+                //    {
+                //        imgName = "~/Content/assets/images/studentImages/" + imgName;
+                //    }
 
-                }
+                //}
 
 
                 db.Entry(student).State = EntityState.Modified;
@@ -271,8 +271,6 @@ namespace SAT.UI.MVC.Controllers
             {
                 return RedirectToAction("Edit", new { id });
             }
-
-
 
             db.SaveChanges();
             return RedirectToAction("Index");
